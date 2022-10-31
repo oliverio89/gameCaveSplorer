@@ -43,7 +43,6 @@ class Background {
         }
 
         this.backgroundPosY += this.backgroundVelY;
-        console.log("el background se mueve")
 
     }
 }

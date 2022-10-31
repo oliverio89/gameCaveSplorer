@@ -49,6 +49,8 @@ const app = {
             this.clearObstacles()
 
             this.isCollision() ? this.gameOver() : null // acordarse que no todas las colisiones acaban en game over
+            this.isCollisionBullets()
+
 
         }, 1000 / this.FPS);
     },
@@ -57,7 +59,7 @@ const app = {
     },
     drawAll() {
         this.background.draw()
-        this.player.draw()
+        this.player.draw(this.framesCounter)
         this.obstacle.forEach(obs => obs.draw())
 
     },
@@ -80,6 +82,30 @@ const app = {
                 this.player.playerPosX <= obs.obstaclePosX + obs.obstacleWidth
             )
         })
+    },
+    isCollisionBullets() {
+        this.player.bullets.forEach(eachBullet => {
+            this.obstacle.some(obs => {
+                if (eachBullet.bulletsPosY < obs.obstaclePosY + obs.obstacleHeight &&
+                    eachBullet.bulletsPosX + eachBullet.playerSizeW >= obs.obstaclePosX &&
+                    eachBullet.bulletsPosY + eachBullet.playerSizeH >= obs.obstaclePosY &&
+                    eachBullet.bulletsPosX <= obs.obstaclePosX + obs.obstacleWidth) {
+                    let indice = this.obstacle.indexOf(obs)                 //sacar un elemento de la array
+                    this.obstacle.splice(indice, 1)
+                    console.log('hit')
+                    let indiceBullets = this.player.bullets.indexOf(eachBullet)
+                    this.player.bullets.splice(indiceBullets, 1)
+                }
+            })
+        })
+        /* return this.obstacle.some(obs => {
+             return (
+                 this.player.bullets.bulletsPosY < obs.obstaclePosY + obs.obstacleHeight &&
+                 this.player.bullets.bulletsPosX + this.player.bullets.playerSizeW >= obs.obstaclePosX &&
+                 this.player.bullets.bulletsPosY + this.player.bullets.playerSizeH >= obs.obstaclePosY &&
+                 this.player.bullets.bulletsPosX <= obs.obstaclePosX + obs.obstacleWidth
+             
+         })*/
     },
     gameOver() {
         clearInterval(this.interval)
