@@ -12,7 +12,6 @@ class Wall {
         this.wallHeight = 25
         this.wallPosX = (Math.random() * this.backgroundSize.w) - this.wallWidth
 
-
     }
 
     draw() {

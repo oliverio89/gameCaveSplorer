@@ -22,6 +22,7 @@ const app = {
 
     keys: undefined,
 
+    score: 0,
 
 
     init() {
@@ -54,8 +55,10 @@ const app = {
             this.isCollision() ? this.gameOver() : null // acordarse que no todas las colisiones acaban en game over
             this.isCollisionBullets()
             this.isCollisionWalls() ? this.gameOver() : null
+            this.winCondition()
 
         }, 1000 / this.FPS);
+
     },
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
@@ -65,10 +68,10 @@ const app = {
         this.player.draw(this.framesCounter)
         this.obstacle.forEach(obs => obs.draw())
         this.wall.forEach(eachWall => eachWall.draw())
-
+        this.drawScore()
     },
     generateObstacles() {
-        if (this.framesCounter % 90 === 0) {
+        if (this.framesCounter % 70 === 0) {
             this.obstacle.push(new Obstacle(this.ctx, this.canvasSize,))
         }
     },
@@ -109,6 +112,7 @@ const app = {
                     this.obstacle.splice(index, 1)
                     let indexBullets = this.player.bullets.indexOf(eachBullet)
                     this.player.bullets.splice(indexBullets, 1)
+                    this.score++
                 }
             })
 
@@ -148,5 +152,17 @@ const app = {
     },
     moveAll() {
         this.player.setEventHandlers()
-    }
+    },
+    drawScore() {
+        this.ctx.font = "50px Arial";
+        this.ctx.fillStyle = "#0095DD";
+        this.ctx.fillText("Score: " + this.score, 100, 100)
+        //this.fillText("hello World", canvas.width / 2, canvas.height / 2)
+    },
+    winCondition() {
+        if (this.score == 3) {
+            drawImage()
+        }
+    },
 }
+
