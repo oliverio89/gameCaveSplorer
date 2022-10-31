@@ -12,6 +12,8 @@ const app = {
 
     obstacle: [],
 
+    wall: [],
+
     player: undefined,
 
     background: undefined,
@@ -38,7 +40,6 @@ const app = {
     },
     start() {
         this.reset()
-        console.log('hola')
         this.interval = setInterval(() => {
             this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
             this.clearAll()
@@ -47,10 +48,12 @@ const app = {
 
             this.generateObstacles()
             this.clearObstacles()
+            this.generateWalls()
+            this.clearWalls()
 
             this.isCollision() ? this.gameOver() : null // acordarse que no todas las colisiones acaban en game over
             this.isCollisionBullets()
-
+            this.isCollisionWalls() ? this.gameOver() : null
 
         }, 1000 / this.FPS);
     },
@@ -61,6 +64,7 @@ const app = {
         this.background.draw()
         this.player.draw(this.framesCounter)
         this.obstacle.forEach(obs => obs.draw())
+        this.wall.forEach(eachWall => eachWall.draw())
 
     },
     generateObstacles() {
@@ -68,9 +72,19 @@ const app = {
             this.obstacle.push(new Obstacle(this.ctx, this.canvasSize,))
         }
     },
+    generateWalls() {
+        if (this.framesCounter % 150 === 0) {
+            this.wall.push(new Wall(this.ctx, this.canvasSize))
+        }
+    },
+
+
     clearObstacles() {
         this.obstacle = this.obstacle.filter(obs => obs.obstaclePosX >= 0)
+    },
 
+    clearWalls() {
+        this.wall = this.wall.filter(obs => obs.wallPosX >= 0)
     },
 
     isCollision() {
@@ -83,6 +97,7 @@ const app = {
             )
         })
     },
+
     isCollisionBullets() {
         this.player.bullets.forEach(eachBullet => {
             this.obstacle.some(obs => {
@@ -90,22 +105,37 @@ const app = {
                     eachBullet.bulletsPosX + eachBullet.playerSizeW >= obs.obstaclePosX &&
                     eachBullet.bulletsPosY + eachBullet.playerSizeH >= obs.obstaclePosY &&
                     eachBullet.bulletsPosX <= obs.obstaclePosX + obs.obstacleWidth) {
-                    let indice = this.obstacle.indexOf(obs)                 //sacar un elemento de la array
-                    this.obstacle.splice(indice, 1)
-                    console.log('hit')
-                    let indiceBullets = this.player.bullets.indexOf(eachBullet)
-                    this.player.bullets.splice(indiceBullets, 1)
+                    let index = this.obstacle.indexOf(obs)                 //sacar un elemento de la array
+                    this.obstacle.splice(index, 1)
+                    let indexBullets = this.player.bullets.indexOf(eachBullet)
+                    this.player.bullets.splice(indexBullets, 1)
                 }
             })
+
+            this.wall.some(obs => {
+                if (eachBullet.bulletsPosY < obs.wallPosY + obs.wallHeight &&
+                    eachBullet.bulletsPosX + eachBullet.playerSizeW >= obs.wallPosX &&
+                    eachBullet.bulletsPosY + eachBullet.playerSizeH >= obs.wallPosY &&
+                    eachBullet.bulletsPosX <= obs.wallPosX + obs.wallWidth) {
+                    let indexBullets = this.player.bullets.indexOf(eachBullet)
+                    this.player.bullets.splice(indexBullets, 1)
+                }
+            })
+
         })
-        /* return this.obstacle.some(obs => {
-             return (
-                 this.player.bullets.bulletsPosY < obs.obstaclePosY + obs.obstacleHeight &&
-                 this.player.bullets.bulletsPosX + this.player.bullets.playerSizeW >= obs.obstaclePosX &&
-                 this.player.bullets.bulletsPosY + this.player.bullets.playerSizeH >= obs.obstaclePosY &&
-                 this.player.bullets.bulletsPosX <= obs.obstaclePosX + obs.obstacleWidth
-             
-         })*/
+    },
+
+
+
+    isCollisionWalls() {
+
+        return this.wall.some(obs => {
+            return this.player.playerPosY < obs.wallPosY + obs.wallHeight &&
+                this.player.playerPosX + this.player.playerSize.w >= obs.wallPosX &&
+                this.player.playerPosY + this.player.playerSize.h >= obs.wallPosY &&
+                this.player.playerPosX <= obs.wallPosX + obs.wallWidth
+
+        })
     },
     gameOver() {
         clearInterval(this.interval)
@@ -114,6 +144,7 @@ const app = {
         this.background = new Background(this.ctx, this.canvasSize)
         this.player = new Player(this.ctx, this.canvasSize)
         this.obstacle = []
+        this.wall = []
     },
     moveAll() {
         this.player.setEventHandlers()

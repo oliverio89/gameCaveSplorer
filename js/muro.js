@@ -1,4 +1,4 @@
-class Obstacle {
+class Muro {
     constructor(ctx, canvasSize) {
         this.ctx = ctx
         this.backgroundSize = canvasSize
@@ -6,10 +6,10 @@ class Obstacle {
             w: this.backgroundSize.w,
             h: this.backgroundSize.h
         }
-        this.obstacleVelY = 3
-        this.obstaclePosY = 0
-        this.obstacleWidth = 100
-        this.obstacleHeight = 25
+        this.muroVelY = 3
+        this.muroPosY = 0
+        this.muroWidth = 100
+        this.muroHeight = 25
         this.obstaclePosX = (Math.random() * this.backgroundSize.w) - this.obstacleWidth
 
 

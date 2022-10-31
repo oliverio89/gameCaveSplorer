@@ -13,7 +13,7 @@ class Background {
             w: this.backgroundSize.w,
             h: this.backgroundSize.h
         }
-        this.backgroundVelY = 5;
+        this.backgroundVelY = 2;
         this.backgroundInstance = new Image()
         this.backgroundInstance.src = this.backgroundImage
 
