@@ -26,6 +26,7 @@ const app = {
 
 
     init() {
+        document.getElementById('start-button').style.display = "none"
         this.ctx = document.querySelector('#canvas').getContext('2d')
         this.setDimensions()
         this.start()
@@ -55,7 +56,7 @@ const app = {
             this.isCollision() ? this.gameOver() : null // acordarse que no todas las colisiones acaban en game over
             this.isCollisionBullets()
             this.isCollisionWalls() ? this.gameOver() : null
-            this.winCondition()
+            // this.winCondition()
 
         }, 1000 / this.FPS);
 
@@ -71,12 +72,12 @@ const app = {
         this.drawScore()
     },
     generateObstacles() {
-        if (this.framesCounter % 70 === 0) {
+        if (this.framesCounter % 75 === 0) {
             this.obstacle.push(new Obstacle(this.ctx, this.canvasSize,))
         }
     },
     generateWalls() {
-        if (this.framesCounter % 150 === 0) {
+        if (this.framesCounter % 200 === 0) {
             this.wall.push(new Wall(this.ctx, this.canvasSize))
         }
     },
@@ -143,6 +144,8 @@ const app = {
     },
     gameOver() {
         clearInterval(this.interval)
+        this.clearAll()
+        document.querySelector('#gameOver').style.display = "block"
     },
     reset() {
         this.background = new Background(this.ctx, this.canvasSize)
@@ -159,10 +162,10 @@ const app = {
         this.ctx.fillText("Score: " + this.score, 100, 100)
         //this.fillText("hello World", canvas.width / 2, canvas.height / 2)
     },
-    winCondition() {
-        if (this.score == 3) {
-            drawImage()
-        }
-    },
+    // winCondition() {
+    //     if (this.score == 3) {
+    //         drawImage()
+    //     }
+    // },
 }
 

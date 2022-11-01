@@ -8,8 +8,8 @@ class Obstacle {
         }
         this.obstacleVelY = 3
         this.obstaclePosY = 0
-        this.obstacleWidth = 100
-        this.obstacleHeight = 25
+        this.obstacleWidth = 70
+        this.obstacleHeight = 70
         this.obstaclePosX = (Math.random() * this.backgroundSize.w) - this.obstacleWidth
 
 

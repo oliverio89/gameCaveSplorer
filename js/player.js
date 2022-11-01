@@ -19,7 +19,7 @@ class Player {
         this.playerY0 = this.playerPosY
 
         this.image = new Image();
-        this.image.src = '../img/player.png'
+        this.image.src = './img/player.png'
         this.image.frames = 3
         this.image.framesIndex = 0
 
@@ -59,7 +59,9 @@ class Player {
                     this.playerPosY += 15
                     break;
                 case ' ':
+                    event.preventDefault()
                     this.shoot()
+
             }
         }
     }

@@ -5,7 +5,7 @@ class Background {
 
         this.backgroundInstance = undefined
 
-        this.backgroundImage = '../img/bg.png'
+        this.backgroundImage = './img/bg.png'
 
         this.backgroundPosX = 0
         this.backgroundPosY = 0

@@ -8,8 +8,8 @@ class Wall {
         }
         this.wallVelY = 3
         this.wallPosY = 0
-        this.wallWidth = 300
-        this.wallHeight = 25
+        this.wallWidth = 550
+        this.wallHeight = 50
         this.wallPosX = (Math.random() * this.backgroundSize.w) - this.wallWidth
 
     }
