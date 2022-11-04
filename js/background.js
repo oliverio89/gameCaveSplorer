@@ -5,7 +5,7 @@ class Background {
 
         this.backgroundInstance = undefined
 
-        this.backgroundImage = './img/bg.png'
+        this.backgroundImage = './img/fondo 2.png'
 
         this.backgroundPosX = 0
         this.backgroundPosY = 0
@@ -16,10 +16,8 @@ class Background {
         this.backgroundVelY = 2;
         this.backgroundInstance = new Image()
         this.backgroundInstance.src = this.backgroundImage
-
-
-
     }
+
     draw() {
         this.ctx.drawImage(
             this.backgroundInstance,

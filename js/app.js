@@ -14,22 +14,36 @@ const app = {
 
     wall: [],
 
+    rock: [],
+
     player: undefined,
 
     background: undefined,
 
     framesCounter: 0,
 
-    keys: undefined,
+
+    gameOver: undefined,
 
     score: 0,
 
+    backgroundMusic: new Audio('./sound/GameMusic.mp3'),
+
+
 
     init() {
-        document.getElementById('start-button').style.display = "none"
+        document.querySelector('#canvas').style = 'display:block'
+        document.querySelector('#game-intro').style = 'display:none'
         this.ctx = document.querySelector('#canvas').getContext('2d')
         this.setDimensions()
+
         this.start()
+        this.backgroundMusic.play()
+        let round1Sound = new Audio('./sound/round1Fight!.mp3')
+        round1Sound.volume = 1
+        round1Sound.play()
+
+
 
 
 
@@ -52,30 +66,47 @@ const app = {
             this.clearObstacles()
             this.generateWalls()
             this.clearWalls()
+            this.generateRocks()
+            this.clearRocks()
+            this.player.keys.leftKey.pressed && this.player.moveLeft()
+            this.player.keys.rigthKey.pressed && this.player.moveRigth()
+            this.player.keys.upKey.pressed && this.player.moveUp()
+            this.player.keys.downKey.pressed && this.player.moveDown()
 
-            this.isCollision() ? this.gameOver() : null // acordarse que no todas las colisiones acaban en game over
+            this.isCollision() ? this.gameFinaly() : null // acordarse que no todas las colisiones acaban en game over
             this.isCollisionBullets()
-            this.isCollisionWalls() ? this.gameOver() : null
-            // this.winCondition()
+            this.isCollisionWalls() ? this.gameFinaly() : null
+            this.isCollisionRocks() ? this.gameFinaly() : null
+            this.winCondition()
 
         }, 1000 / this.FPS);
 
     },
+
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
     },
+
     drawAll() {
         this.background.draw()
         this.player.draw(this.framesCounter)
         this.obstacle.forEach(obs => obs.draw())
         this.wall.forEach(eachWall => eachWall.draw())
+        this.rock.forEach(eachRock => eachRock.draw())
         this.drawScore()
+
     },
     generateObstacles() {
-        if (this.framesCounter % 75 === 0) {
+        if (this.framesCounter % 150 === 0) {
             this.obstacle.push(new Obstacle(this.ctx, this.canvasSize,))
         }
     },
+    generateRocks() {
+        if (this.framesCounter % 100 === 0) {
+            this.rock.push(new Rock(this.ctx, this.canvasSize))
+        }
+    },
+
     generateWalls() {
         if (this.framesCounter % 200 === 0) {
             this.wall.push(new Wall(this.ctx, this.canvasSize))
@@ -90,6 +121,9 @@ const app = {
     clearWalls() {
         this.wall = this.wall.filter(obs => obs.wallPosX >= 0)
     },
+    clearRocks() {
+        this.rock = this.rock.filter(obs => obs.rockPosX >= 0)
+    },
 
     isCollision() {
         return this.obstacle.some(obs => {
@@ -101,8 +135,19 @@ const app = {
             )
         })
     },
+    isCollisionRocks() {
+        return this.rock.some(obs => {
+            return (
+                this.player.playerPosY < obs.rockPosY + obs.rockHeight &&
+                this.player.playerPosX + this.player.playerSize.w >= obs.rockPosX &&
+                this.player.playerPosY + this.player.playerSize.h >= obs.rockPosY &&
+                this.player.playerPosX <= obs.rockPosX + obs.rockWidth
+            )
+        })
+    },
 
     isCollisionBullets() {
+
         this.player.bullets.forEach(eachBullet => {
             this.obstacle.some(obs => {
                 if (eachBullet.bulletsPosY < obs.obstaclePosY + obs.obstacleHeight &&
@@ -114,6 +159,23 @@ const app = {
                     let indexBullets = this.player.bullets.indexOf(eachBullet)
                     this.player.bullets.splice(indexBullets, 1)
                     this.score++
+                    let ColSound = new Audio('./sound/BING.mp3')
+                    ColSound.play()
+                }
+            })
+            this.rock.some(obs => {
+                if (eachBullet.bulletsPosY < obs.rockPosY + obs.rockHeight &&
+                    eachBullet.bulletsPosX + eachBullet.playerSizeW >= obs.rockPosX &&
+                    eachBullet.bulletsPosY + eachBullet.playerSizeH >= obs.rockPosY &&
+                    eachBullet.bulletsPosX <= obs.rockPosX + obs.rockWidth) {
+                    let indexRock = this.rock.indexOf(obs)                 //sacar un elemento de la array
+                    this.rock.splice(indexRock, 1)
+                    let indexBullets = this.player.bullets.indexOf(eachBullet)
+                    this.player.bullets.splice(indexBullets, 1)
+                    let rockSound = new Audio('./sound/crack.mp3')
+                    rockSound.play()
+                    this.player.playerVel += 1
+
                 }
             })
 
@@ -131,7 +193,6 @@ const app = {
     },
 
 
-
     isCollisionWalls() {
 
         return this.wall.some(obs => {
@@ -142,30 +203,52 @@ const app = {
 
         })
     },
-    gameOver() {
-        clearInterval(this.interval)
+
+    gameFinaly() {
         this.clearAll()
-        document.querySelector('#gameOver').style.display = "block"
+        clearInterval(this.interval)
+
+        document.querySelector('#gameOver').style.display = 'block'
+        document.querySelector('#game-finish').style.display = 'block'
+        this.backgroundMusic.pause()
+        let gameOverSound = new Audio('./sound/levelFailed.mp3')
+        gameOverSound.play()
+        let finishSound = new Audio('./sound/finishHim.mp3')
+        finishSound.play()
+
     },
     reset() {
         this.background = new Background(this.ctx, this.canvasSize)
         this.player = new Player(this.ctx, this.canvasSize)
         this.obstacle = []
         this.wall = []
+        this.rock = []
     },
     moveAll() {
         this.player.setEventHandlers()
     },
     drawScore() {
-        this.ctx.font = "50px Arial";
-        this.ctx.fillStyle = "#0095DD";
+
+        this.ctx.font = "75px Poor Story, cursive"
+        this.ctx.fillStyle = "white"
         this.ctx.fillText("Score: " + this.score, 100, 100)
-        //this.fillText("hello World", canvas.width / 2, canvas.height / 2)
+
+
+
     },
-    // winCondition() {
-    //     if (this.score == 3) {
-    //         drawImage()
-    //     }
-    // },
+
+    winCondition() {
+        if (this.score === 15) {
+            // this.clearAll()
+            clearInterval(this.interval)
+            document.querySelector('#gameWin').style.display = 'block'
+            this.backgroundMusic.pause()
+
+            let winSound = new Audio('./sound/youWin.mp3')
+            winSound.play()
+
+        }
+    }
+
 }
 

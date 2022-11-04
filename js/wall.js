@@ -9,14 +9,23 @@ class Wall {
         this.wallVelY = 3
         this.wallPosY = 0
         this.wallWidth = 550
-        this.wallHeight = 50
+        this.wallHeight = 70
         this.wallPosX = (Math.random() * this.backgroundSize.w) - this.wallWidth
+        this.image = new Image()
+        this.image.src = './img/obstaculo1.png'
 
     }
 
     draw() {
-        this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(this.wallPosX, this.wallPosY, this.wallWidth, this.wallHeight)
+        // // this.ctx.fillStyle = 'red'
+        // // this.ctx.fillRect(this.wallPosX, this.wallPosY, this.wallWidth, this.wallHeight)
+        this.ctx.drawImage(
+            this.image,
+            this.wallPosX,
+            this.wallPosY,
+            this.wallWidth,
+            this.wallHeight
+        )
         this.move()
     }
 

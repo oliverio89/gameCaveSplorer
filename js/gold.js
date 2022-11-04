@@ -1,4 +1,4 @@
-class Obstacle {
+class Gold {
     constructor(ctx, canvasSize) {
         this.ctx = ctx
         this.backgroundSize = canvasSize
@@ -6,13 +6,13 @@ class Obstacle {
             w: this.backgroundSize.w,
             h: this.backgroundSize.h
         }
-        this.obstacleVelY = 3
-        this.obstaclePosY = 0
-        this.obstacleWidth = 70
-        this.obstacleHeight = 70
-        this.obstaclePosX = (Math.random() * this.backgroundSize.w) - this.obstacleWidth
+        this.goldVelY = 3
+        this.goldPosY = 0
+        this.goldWidth = 70
+        this.goldHeight = 70
+        this.goldPosX = (Math.random() * this.backgroundSize.w) - this.obstacleWidth
         this.image = new Image()
-        this.image.src = './img/diamante.png'
+        this.image.src = './img/gold.png'
 
 
     }
@@ -22,17 +22,16 @@ class Obstacle {
         //this.ctx.fillRect(this.obstaclePosX, this.obstaclePosY, this.obstacleWidth, this.obstacleHeight)
         this.ctx.drawImage(
             this.image,
-            this.obstaclePosX,
-            this.obstaclePosY,
-            this.obstacleWidth,
-            this.obstacleHeight
+            this.goldPosX,
+            this.goldPosY,
+            this.goldWidth,
+            this.goldHeight
 
         )
         this.move()
     }
 
     move() {
-        this.obstaclePosY += this.obstacleVelY
+        this.goldPosY += this.goldVelY
     }
 }
-

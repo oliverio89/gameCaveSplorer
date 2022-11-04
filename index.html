@@ -12,27 +12,40 @@
 </head>
 
 <body>
-    <div class="game-intro">
+    <div id="game-intro" style="display:block">
+        <audio id="cave" autoplay="true" hidden loop>
+            <source src="./sound/caveambient.mp3" type="audio/mpeg" />
+        </audio>
+        <audio id="invest" autoplay="true" hidden loop>
+            <source src="./sound/investigations.mp3" type="audio/mpeg" />
+        </audio>
+        <img id="imageLogo" src="./img/logo.png" alt="">
         <button id="start-button">Start Game</button>
     </div>
-    <div class="gameOver" style="display:none">
-        <p id="'gameOver">Game Over</p>
+    <div id="gameOver">
+        <img src="./img/gameover.jpg" alt="">
+    </div>
+    <div id="gameWin" style="display:none">
+        <img src="./img/winpng.png" alt="">
+        <button id="finish-button" onClick="window.location.href=window.location.href">Reset Game</button>
     </div>
 
 
+    <div id="game-finish" style="display:none">
+        <button id="finish-button" onClick="window.location.href=window.location.href">Reset Game</button>
+    </div>
 
 
-
-
-
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" style="display:none"></canvas>
 
 
     <script src="./js/background.js"></script>
     <script src="./js/bullet.js"></script>
-    <script src="./js/player.js"></script>
     <script src="./js/wall.js"></script>
-    <script src="./js/obstacle.js"></Script>
+    <script src="./js/rock.js"></script>
+    <script src="./js/gold.js"></script>
+    <script src="./js/obstacle.js"></script>
+    <script src="./js/player.js"></script>
     <script src="./js/app.js"></script>
     <script src="./js/index.js"></script>
 

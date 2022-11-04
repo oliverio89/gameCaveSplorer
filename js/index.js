@@ -2,14 +2,16 @@ window.onload = () => {
 
     document.getElementById('start-button').onclick = () => {
         startGame();
-    };
-    //document.getElementsByClassName('gameOver').style.display = "none";
-
-    function startGame() {
-        app.init()
     }
 
+    function startGame() {
+        document.getElementById('cave').pause()
+        document.getElementById('invest').pause()
+        app.init()
+    }
+    // document.querySelector('finish-button').onclick = () => {
 
+    // }
 }
 
 
