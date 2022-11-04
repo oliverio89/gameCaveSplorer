@@ -84,8 +84,6 @@ class Player {
                     break;
                 case "ArrowUp":
                     this.keys.upKey.pressed = true
-
-                    console.log('hello true')
                     break;
                 case "ArrowDown":
                     this.keys.downKey.pressed = true
@@ -111,7 +109,7 @@ class Player {
                     break;
                 case "ArrowUp":
                     this.keys.upKey.pressed = false
-                    console.log('hello false')
+
                     break;
                 case "ArrowDown":
                     this.keys.downKey.pressed = false
@@ -133,22 +131,6 @@ class Player {
             this.image.framesIndex = 0;
         }
     }
-    // move() {
-    //     if (this.playerPosY >= this.gameSize.h - this.playerSize.h) {
-    //         this.playerPosY = this.playerPosY - 5
-    //     }
-
-    //     if (this.playerPosX >= this.gameSize.w - this.playerSize.w) {
-    //         this.playerPosX = this.playerPosX - 5
-    //     }
-    //     if (this.playerPosY <= (this.gameSize.h - this.gameSize.h)) {
-    //         this.playerPosY = this.playerPosY + 5
-    //     }
-
-    //     if (this.playerPosX <= (this.gameSize.w - this.gameSize.w)) {
-    //         this.playerPosX = this.playerPosX + 5
-    //     }
-    // }
 
     moveLeft() {
         this.playerPosX -= this.playerVel

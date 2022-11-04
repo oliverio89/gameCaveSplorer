@@ -28,12 +28,10 @@ body {
     height: 75px;
     background-color: blueviolet;
     cursor: pointer;
-    /* background: rgb(2, 0, 102); */
     bottom: 45%;
     right: 65%;
     transition: background 0.5s ease-in 100ms;
     transition: box-shadow 0.5s ease-in 100ms;
-
 }
 
 #finish-button {

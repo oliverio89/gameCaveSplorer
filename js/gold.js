@@ -18,15 +18,12 @@ class Gold {
     }
 
     draw() {
-        //this.ctx.fillStyle = 'green'
-        //this.ctx.fillRect(this.obstaclePosX, this.obstaclePosY, this.obstacleWidth, this.obstacleHeight)
         this.ctx.drawImage(
             this.image,
             this.goldPosX,
             this.goldPosY,
             this.goldWidth,
             this.goldHeight
-
         )
         this.move()
     }

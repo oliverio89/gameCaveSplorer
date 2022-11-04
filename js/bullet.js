@@ -11,18 +11,10 @@ class Bullets {
         this.image.src = './img/axe.png'
         this.image.frames = 8
         this.image.framesIndex = 0
-
-        // this.radius = 10;
-
         this.velY = 10;
     }
 
     draw(framesCounter) {
-        // this.ctx.beginPath()
-        // this.ctx.fillStyle = 'yellow'
-        // this.ctx.arc(this.bulletsPosX, this.bulletsPosY, this.radius, 0, Math.PI * 2)
-        // this.ctx.fill()
-        // this.ctx.closePath()
         this.ctx.drawImage(
             this.image,
             this.image.framesIndex * (this.image.width / this.image.frames),

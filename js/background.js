@@ -1,7 +1,7 @@
 class Background {
     constructor(context, backgroundSize) {
         this.ctx = context;
-        this.backgroundSize = backgroundSize  //  this.backgroundSize = this.canvasSize
+        this.backgroundSize = backgroundSize
 
         this.backgroundInstance = undefined
 

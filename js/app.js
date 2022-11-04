@@ -38,10 +38,10 @@ const app = {
         this.setDimensions()
 
         this.start()
+        this.backgroundMusic.loop = true
         this.backgroundMusic.play()
-        let round1Sound = new Audio('./sound/round1Fight!.mp3')
-        round1Sound.volume = 1
-        round1Sound.play()
+
+
 
 
 
@@ -73,7 +73,7 @@ const app = {
             this.player.keys.upKey.pressed && this.player.moveUp()
             this.player.keys.downKey.pressed && this.player.moveDown()
 
-            this.isCollision() ? this.gameFinaly() : null // acordarse que no todas las colisiones acaban en game over
+            this.isCollision() ? this.gameFinaly() : null
             this.isCollisionBullets()
             this.isCollisionWalls() ? this.gameFinaly() : null
             this.isCollisionRocks() ? this.gameFinaly() : null
@@ -154,7 +154,7 @@ const app = {
                     eachBullet.bulletsPosX + eachBullet.playerSizeW >= obs.obstaclePosX &&
                     eachBullet.bulletsPosY + eachBullet.playerSizeH >= obs.obstaclePosY &&
                     eachBullet.bulletsPosX <= obs.obstaclePosX + obs.obstacleWidth) {
-                    let index = this.obstacle.indexOf(obs)                 //sacar un elemento de la array
+                    let index = this.obstacle.indexOf(obs)
                     this.obstacle.splice(index, 1)
                     let indexBullets = this.player.bullets.indexOf(eachBullet)
                     this.player.bullets.splice(indexBullets, 1)
@@ -168,7 +168,7 @@ const app = {
                     eachBullet.bulletsPosX + eachBullet.playerSizeW >= obs.rockPosX &&
                     eachBullet.bulletsPosY + eachBullet.playerSizeH >= obs.rockPosY &&
                     eachBullet.bulletsPosX <= obs.rockPosX + obs.rockWidth) {
-                    let indexRock = this.rock.indexOf(obs)                 //sacar un elemento de la array
+                    let indexRock = this.rock.indexOf(obs)
                     this.rock.splice(indexRock, 1)
                     let indexBullets = this.player.bullets.indexOf(eachBullet)
                     this.player.bullets.splice(indexBullets, 1)
@@ -238,15 +238,14 @@ const app = {
     },
 
     winCondition() {
-        if (this.score === 15) {
-            // this.clearAll()
+        if (this.score === 5) {
             clearInterval(this.interval)
             document.querySelector('#gameWin').style.display = 'block'
             this.backgroundMusic.pause()
-
+            let crowdSound = new Audio('./sound/crowd.mp3')
             let winSound = new Audio('./sound/youWin.mp3')
             winSound.play()
-
+            crowdSound.play()
         }
     }
 

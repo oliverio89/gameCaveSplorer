@@ -9,9 +9,7 @@ window.onload = () => {
         document.getElementById('invest').pause()
         app.init()
     }
-    // document.querySelector('finish-button').onclick = () => {
 
-    // }
 }
 
 

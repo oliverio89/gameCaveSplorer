@@ -17,8 +17,7 @@ class Wall {
     }
 
     draw() {
-        // // this.ctx.fillStyle = 'red'
-        // // this.ctx.fillRect(this.wallPosX, this.wallPosY, this.wallWidth, this.wallHeight)
+
         this.ctx.drawImage(
             this.image,
             this.wallPosX,

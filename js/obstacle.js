@@ -18,8 +18,6 @@ class Obstacle {
     }
 
     draw() {
-        //this.ctx.fillStyle = 'green'
-        //this.ctx.fillRect(this.obstaclePosX, this.obstaclePosY, this.obstacleWidth, this.obstacleHeight)
         this.ctx.drawImage(
             this.image,
             this.obstaclePosX,

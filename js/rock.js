@@ -26,7 +26,6 @@ class Rock {
             this.rockPosY,
             this.rockWidth,
             this.rockHeight
-
         )
         this.move()
     }
